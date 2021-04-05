@@ -337,7 +337,11 @@ class SceneImporter():
                 default_shader_alpha.default_value = round((a / 255.0), 2)
 
                 if tex:
-                    tex_name = tex.name.split("\\")[-1]
+                    if tex.name[0] == '.' and len(tex.name) < 5:
+                        #Combine material name with image extension for a valid name
+                        tex_name = mat.name + tex.name
+                    else:
+                        tex_name = tex.name.split("\\")[-1]
                     tmp_name = os.path.join(tempfile.gettempdir(), tex_name)
                     # skp_log(f"Texture saved temporarily at {tmp_name}")
                     tex.write(tmp_name)
